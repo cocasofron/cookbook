@@ -1,83 +1,92 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-   <head>
-      <title>cookbook.ro</title>
-      <meta charset="utf-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1">
-      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-   </head>
-   <body>
-      <nav class="navbar navbar-inverse">
-         <div class="container-fluid">
-            <div class="navbar-header">
-               <a class="navbar-brand" href="#">cookbook.ro</a>
-            </div>
-            <ul class="nav navbar-nav">
-               <li class="active"><a href="/">Home</a></li>
-               <li class="active"><a href="/getRecipes">Recipes</a></li>
+<head>
+    <title>cookbook.ro</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#">cookbook.ro</a>
+        </div>
+        <ul class="nav navbar-nav">
+            <li class="active"><a href="/">Home</a></li>
+            <li class="active"><a href="/getRecipes">Recipes</a></li>
+        </ul>
+        <div sec:authorize="isAuthenticated()">
+            <ul class="nav navbar-nav navbar-right">
+                <li><a><span th:text="|Hello, ${user.firstName}!|"></span></a></li>
+                <li><a href="/logout"><span class="glyphicon glyphicon-user"></span>Logout</a></li>
             </ul>
-            <div sec:authorize="isAuthenticated()">
-               <ul class="nav navbar-nav navbar-right">
-                  <li><a><span th:text="|Hello, ${user.firstName}!|"></span></a></li>
-                  <li><a href="/logout"><span class="glyphicon glyphicon-user"></span>Logout</a></li>
-               </ul>
+        </div>
+        <div sec:authorize="!isAuthenticated()">
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="/register"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+                <li><a href="/login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<div>
+</div>
+<div class="container">
+    <form class="form-horizontal" action="/recipes/addRecipe" th:object="${recipe}" method="POST">
+        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="recipeName">Recipe Name:</label>
+            <div class="col-sm-10">
+                <input th:field="${recipe.recipeName}" type="text" class="form-control" id="recipeName"
+                       placeholder="Recipe Name" name="recipeName">
             </div>
-            <div sec:authorize="!isAuthenticated()">
-               <ul class="nav navbar-nav navbar-right">
-                  <li><a href="/register"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-                  <li><a href="/login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
-               </ul>
-            </div>
-         </div>
-      </nav>
-      <div>
-      </div>
-      <div class="container">
-         <form class="form-horizontal" action="/recipes/addRecipe" th:object="${recipe}" method="POST">
-            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
-            <div class="form-group">
-               <label class="control-label col-sm-2" for="recipeName">Recipe Name:</label>
-               <div class="col-sm-10">
-                  <input th:field="${recipe.recipeName}" type="text" class="form-control" id="recipeName" placeholder="Recipe Name" name="recipeName">
-               </div>
-            </div>
-            <div class="form-group">
-               <label class="control-label col-sm-2" for="tags">Ingredients</label>
-               <div class="col-sm-10">
-                  <div>
-                     <input type="text" id="ingredient" placeholder="ingredient" th:field="${recipe.ingredients[0].ingredient}" />
-                     <input type="text" id="quantity" placeholder="quantity" th:field="${recipe.ingredients[0].quantity}" /> 
-                  </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="tags">Ingredients</label>
+            <div class="col-sm-10">
+                <div>
+                    <input type="text" id="ingredient" placeholder="ingredient"
+                           th:field="${recipe.ingredients[0].ingredient}"/>
+                    <input type="text" id="quantity" placeholder="quantity"
+                           th:field="${recipe.ingredients[0].quantity}"/>
+                </div>
                 <br>
-               <div >
-                  <input type="text" id="ingredient" placeholder="ingredient" th:field="${recipe.ingredients[1].ingredient}" />
-                  <input type="text" id="quantity" placeholder="quantity" th:field="${recipe.ingredients[1].quantity}" />
-               </div>
-               <br>
-               <div >
-                  <input type="text" id="ingredient" placeholder="ingredient" th:field="${recipe.ingredients[2].ingredient}" />
-                  <input type="text" id="quantity" placeholder="quantity" th:field="${recipe.ingredients[2].quantity}" />
-               </div>
+                <div>
+                    <input type="text" id="ingredient" placeholder="ingredient"
+                           th:field="${recipe.ingredients[1].ingredient}"/>
+                    <input type="text" id="quantity" placeholder="quantity"
+                           th:field="${recipe.ingredients[1].quantity}"/>
+                </div>
+                <br>
+                <div>
+                    <input type="text" id="ingredient" placeholder="ingredient"
+                           th:field="${recipe.ingredients[2].ingredient}"/>
+                    <input type="text" id="quantity" placeholder="quantity"
+                           th:field="${recipe.ingredients[2].quantity}"/>
+                </div>
             </div>
-      </div>
-      <div class="form-group">
-      <label class="control-label col-sm-2" for="cookingMethod">How to do it:</label>
-      <div class="col-sm-10">
-      <textarea th:field="${recipe.cookingMethod}" placeholder="Cooking Method" class="form-control" rows="5" id="cookingMethod"></textarea>
-      </div>
-      </div>
-      <div class="form-group">
-      <label class="control-label col-sm-2" for="tags">Categories:</label>
-      <div class="col-sm-10">
-      <input th:field="${recipe.tags}" type="text" class="form-control" id="tags" placeholder="e.g. Vegan" name="tags">
-      </div>
-      </div>
-      <div>
-      <button type="submit" class="btn btn-default btn-sm btn-block" >Add recipe</button>
-      </div>
-      </form>
-      </div>
-   </body>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="cookingMethod">How to do it:</label>
+            <div class="col-sm-10">
+                <textarea th:field="${recipe.cookingMethod}" placeholder="Cooking Method" class="form-control" rows="5"
+                          id="cookingMethod"></textarea>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="tags">Categories:</label>
+            <div class="col-sm-10">
+                <input th:field="${recipe.tags}" type="text" class="form-control" id="tags" placeholder="e.g. Vegan"
+                       name="tags">
+            </div>
+        </div>
+        <div>
+            <button type="submit" class="btn btn-default btn-sm btn-block">Add recipe</button>
+        </div>
+    </form>
+</div>
+</body>
 </html>

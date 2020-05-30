@@ -1,58 +1,58 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-   <head>
-      <title>cookbook.ro</title>
-      <meta charset="utf-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1">
-      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-   </head>
-   <body>
-      <nav class="navbar navbar-inverse">
-         <div class="container-fluid">
-            <div class="navbar-header">
-               <a class="navbar-brand" href="#">cookbook.ro</a>
-            </div>
-            <ul class="nav navbar-nav">
-               <li class="active"><a href="/">Home</a></li>
-               <li class="active"><a href="/getRecipes">Recipes</a></li>
+<head>
+    <title>cookbook.ro</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#">cookbook.ro</a>
+        </div>
+        <ul class="nav navbar-nav">
+            <li class="active"><a href="/">Home</a></li>
+            <li class="active"><a href="/getRecipes">Recipes</a></li>
+        </ul>
+        <div sec:authorize="isAuthenticated()">
+            <ul class="nav navbar-nav navbar-right">
+                <li><a><span th:text="|Hello, ${user.firstName}!|"></span></a></li>
+                <li><a href="/logout"><span class="glyphicon glyphicon-user"></span>Logout</a></li>
             </ul>
-            <div sec:authorize="isAuthenticated()">
-               <ul class="nav navbar-nav navbar-right">
-                  <li><a><span th:text="|Hello, ${user.firstName}!|"></span></a></li>
-                  <li><a href="/logout"><span class="glyphicon glyphicon-user"></span>Logout</a></li>
-               </ul>
+        </div>
+        <div sec:authorize="!isAuthenticated()">
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="/register"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+                <li><a href="/login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<br>
+<br>
+<div class="container">
+    <div th:each="recipe : ${recipe}">
+        <h3 th:text="${recipe.recipeName}"></h3>
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <label class="control-label col-sm-2" for="ingredients">Ingredients:</label>
+                <div class="col-sm-10" th:text="${recipe.ingredients}"></div>
             </div>
-            <div sec:authorize="!isAuthenticated()">
-               <ul class="nav navbar-nav navbar-right">
-                  <li><a href="/register"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-                  <li><a href="/login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
-               </ul>
+            <div class="panel-body">
+                <label class="control-label col-sm-2" for="method">How to do it:</label>
+                <div class="col-sm-10" th:text="${recipe.cookingMethod}"></div>
             </div>
-         </div>
-      </nav>
-      <br>
-      <br>
-      <div class="container">
-         <div th:each="recipe : ${recipe}">
-            <h3 th:text="${recipe.recipeName}"></h3>
-            <div class="panel panel-default">
-               <div class="panel-body">
-                  <label class="control-label col-sm-2" for="ingredients">Ingredients:</label>
-                  <div class="col-sm-10" th:text="${recipe.ingredients}"></div>
-               </div>
-               <div class="panel-body">
-                  <label class="control-label col-sm-2" for="method">How to do it:</label>
-                  <div class="col-sm-10" th:text="${recipe.cookingMethod}"></div>
-               </div>
-               <div class="panel-body">
-                  <label class="control-label col-sm-2" for="tags">Categories:</label>
-                  <div class="col-sm-10" th:text="${recipe.tags}"></div>
-               </div>
+            <div class="panel-body">
+                <label class="control-label col-sm-2" for="tags">Categories:</label>
+                <div class="col-sm-10" th:text="${recipe.tags}"></div>
             </div>
-         </div>
-      </div>
+        </div>
+    </div>
+</div>
 
-   </body>
+</body>
 </html>
