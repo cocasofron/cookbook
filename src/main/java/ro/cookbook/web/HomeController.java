@@ -25,13 +25,18 @@ public class HomeController {
 
     @GetMapping("/")
     public String getHome(@AuthenticationPrincipal User user, Model model) {
-        List<Recipe> tastyRecipes = recipeService.filterByCategory(Arrays.asList("pizza","pasta"));
-        List<Recipe> healthyRecipes = recipeService.filterByCategory(Arrays.asList("salads","healthy"));
+        List<Recipe> tastyRecipes = recipeService.filterByCategory(Arrays.asList("pizza", "pasta"));
+        List<Recipe> healthyRecipes = recipeService.filterByCategory(Arrays.asList("salads", "healthy"));
         List<Recipe> desserts = recipeService.filterByCategory(Collections.singletonList("desserts"));
-        model.addAttribute("tastyRecipes",tastyRecipes);
-        model.addAttribute("healthyRecipes",healthyRecipes);
-        model.addAttribute("desserts",desserts);
+        model.addAttribute("tastyRecipes", tastyRecipes);
+        model.addAttribute("healthyRecipes", healthyRecipes);
+        model.addAttribute("desserts", desserts);
         model.addAttribute("user", user);
         return "home/home";
+    }
+
+    @GetMapping("/error")
+    public String getErrorPage() {
+        return "error";
     }
 }

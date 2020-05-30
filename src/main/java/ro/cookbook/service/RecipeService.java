@@ -3,9 +3,13 @@ package ro.cookbook.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 import ro.cookbook.domain.Recipe;
 import ro.cookbook.repositories.RecipeRepository;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -50,45 +54,18 @@ public class RecipeService {
         return recipes;
     }
 
-    public Recipe add(Recipe recipe) {
+    public Recipe add(Recipe recipe, MultipartFile file) throws Exception {
         recipe.setTags(recipe.getTags().toLowerCase());
         repository.save(recipe);
+        Path path = Paths.get("src/main/resources/static/images/" + recipe.getId() + ".jpg");
+        Files.write(path, file.getBytes());
         return recipe;
     }
 
-    public Recipe getById(Long id){
-        Optional<Recipe> recipe=repository.findById(id);
+    public Recipe getById(Long id) {
+        Optional<Recipe> recipe = repository.findById(id);
         return recipe.orElse(null);
     }
-//
-//    public Recipe add(String recipe, MultipartFile file) {
-//
-//        Gson g = new Gson();
-//        Recipe newRecipe = g.fromJson(recipe, Recipe.class);
-////
-////        Image image = new Image();
-////        try {
-////            image.setImageName(file.getOriginalFilename());
-////            image.setImage(file.getBytes());
-////        } catch (IOException e) {
-////            System.out.println("Image was built");
-////        }
-//
-////        Set<Image> images = files.stream().map(f -> {
-////            Image image = new Image();
-////            try {
-////                image.setImageName(f.getOriginalFilename());
-////                image.setImage(f.getBytes());
-////            } catch (IOException e) {
-////                System.out.println(e.getCause());
-////            }
-////            return image;
-////       }).collect(Collectors.toSet());
-//
-//     //   newRecipe.setImage(image);
-//        repository.save(newRecipe);
-//        return newRecipe;
-//    }
 
     public void deleteById(Long id) {
         repository.deleteById(id);
