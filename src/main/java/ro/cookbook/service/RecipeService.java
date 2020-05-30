@@ -21,7 +21,7 @@ public class RecipeService {
         return repository.findAll();
     }
 
-    public List<Recipe> filterByName(final String name) {
+    public List<Recipe> filterByName(String name) {
 
         return repository.findAll().stream()
                 .filter(r -> r.getRecipeName().equalsIgnoreCase(name) || r.getRecipeName().contains(name))

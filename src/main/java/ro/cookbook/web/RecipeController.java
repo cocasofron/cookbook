@@ -14,8 +14,10 @@ import ro.cookbook.domain.Recipe;
 import ro.cookbook.domain.User;
 import ro.cookbook.service.RecipeService;
 
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
-import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Controller
@@ -57,11 +59,24 @@ public class RecipeController {
 
     @PostMapping("/recipes/addRecipe")
     public String addRecipe(@AuthenticationPrincipal User user, Recipe recipe, Model model) {
-        model.addAttribute("user",user);
+        model.addAttribute("user", user);
         List<Ingredient> ingredients = recipe.getIngredients().stream().map(ingredient -> new Ingredient(ingredient.getIngredient(), ingredient.getQuantity(), recipe)).collect(Collectors.toList());
         recipe.setIngredients(ingredients);
         service.add(recipe);
         return "success";
+    }
+
+    @PostMapping("/searchRecipes")
+    public String searchEverything(@AuthenticationPrincipal User user, Model model, String search) {
+        model.addAttribute("search", search);
+        Set<Recipe> recipes = new HashSet<>();
+        service.filterByName(search);
+        List<String> keywordsList = Arrays.asList(search.split(" "));
+        recipes.addAll(service.filterByIngredients(keywordsList));
+        recipes.addAll(service.filterByCategory(keywordsList));
+        model.addAttribute("recipes", recipes);
+        model.addAttribute("user", user);
+        return "recipes/searchResult";
     }
 
 //    @RequestMapping(value = "/recipes/addRecipe", method = RequestMethod.POST, consumes = {"multipart/form-data"})
@@ -83,7 +98,7 @@ public class RecipeController {
 //    }
 
     @GetMapping("/recipe/{recipeId}")
-    String getById(@AuthenticationPrincipal User user, Model model,@PathVariable Long recipeId) {
+    String getById(@AuthenticationPrincipal User user, Model model, @PathVariable Long recipeId) {
         Recipe recipe = service.getById(recipeId);
         model.addAttribute("recipe", recipe);
         model.addAttribute("user", user);

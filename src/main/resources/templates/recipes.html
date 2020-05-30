@@ -18,6 +18,16 @@
             <li class="active"><a href="/">Home</a></li>
             <li class="active"><a href="/getRecipes">Recipes</a></li>
         </ul>
+        <ul class="nav navbar-nav">
+            <li>
+                <form action="/searchRecipes" th:object="${search}" method="POST">
+                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                    <div style="margin-top:9px;">
+                        <input class="form-control" type="text" name="search" placeholder="Search anything" aria-label="Search">
+                    </div>
+                </form>
+            </li>
+        </ul>
         <div sec:authorize="isAuthenticated()">
             <ul class="nav navbar-nav navbar-right">
                 <li><a><span th:text="|Hello, ${user.firstName}!|"></span></a></li>
@@ -40,7 +50,6 @@
 <br>
 <br>
 <div class="container">
-    <input class="form-control" id="myInput" type="text" placeholder="Search..">
     <div th:each="recipe : ${recipes}">
         <h3 th:text="${recipe.recipeName}"></h3>
         <div class="panel panel-default">
