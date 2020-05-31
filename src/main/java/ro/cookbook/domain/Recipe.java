@@ -2,10 +2,7 @@ package ro.cookbook.domain;
 
 import lombok.*;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.util.List;
 
 @Entity(name = "recipe")
@@ -21,4 +18,6 @@ public class Recipe extends BaseEntity<Long> {
     private List<Ingredient> ingredients;
     private String cookingMethod;
     private String tags;
+    @ManyToOne
+    private User addedBy;
 }

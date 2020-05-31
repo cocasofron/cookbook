@@ -74,6 +74,9 @@
                     <label class="control-label col-sm-2">Categories:</label>
                     <div class="col-sm-10" th:text="${recipe.tags}"></div>
                 </div>
+                <div class="panel-body">
+                    <div class="col-sm-10 glyphicon glyphicon-user" th:text="' '+${recipe.addedBy}"></div>
+                </div>
             </div>
             <div class="panel panel-default col-sm-3">
                 <img th:src="@{'images/' + ${recipe.id} + .jpg}" style="width:250px;height:250px;">

@@ -23,7 +23,8 @@
                 <form action="/searchRecipes" th:object="${search}" method="POST">
                     <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
                     <div style="margin-top:9px;">
-                        <input class="form-control" type="text" name="search" placeholder="Search anything" aria-label="Search">
+                        <input class="form-control" type="text" name="search" placeholder="Search anything"
+                               aria-label="Search">
                     </div>
                 </form>
             </li>
@@ -67,6 +68,9 @@
                 <div class="panel-body">
                     <label class="control-label col-sm-2">Categories:</label>
                     <div class="col-sm-10" th:text="${recipe.tags}"></div>
+                </div>
+                <div class="panel-body">
+                    <div class="col-sm-10 glyphicon glyphicon-user" th:text="' '+${recipe.addedBy}"></div>
                 </div>
             </div>
             <div class="panel panel-default col-sm-3">

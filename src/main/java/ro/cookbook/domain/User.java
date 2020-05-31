@@ -1,7 +1,8 @@
 package ro.cookbook.domain;
 
-import lombok.*;
-import org.hibernate.validator.constraints.UniqueElements;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -18,10 +19,16 @@ public class User extends BaseEntity<Long> {
 
     private String firstName;
     private String lastName;
-   // @UniqueElements
+    // @UniqueElements
     private String username;
     private String password;
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "user")
     private Set<Authorities> authorities = new HashSet<>();
+    @OneToMany
+    private Set<Recipe> addedRecipes;
 
+    @Override
+    public String toString() {
+        return firstName;
+    }
 }
