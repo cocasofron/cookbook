@@ -77,6 +77,15 @@
                 <div class="panel-body">
                     <div class="col-sm-10 glyphicon glyphicon-user" th:text="' '+${recipe.addedBy}"></div>
                 </div>
+                <div sec:authorize="isAuthenticated()">
+                    <form method="post" action="/recipes/addToFavourites">
+                        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                        <input type="hidden" id="recipeId" name="recipeId" th:value="${recipe.id}"/>
+                        <button type="submit" class="btn btn-dark btn-sm" style="margin-top:9px; margin-right:10px; ">
+                            <span class="glyphicon glyphicon-log-out"></span> Add to favourites
+                        </button>
+                    </form>
+                </div>
             </div>
             <div class="panel panel-default col-sm-3">
                 <img th:src="@{'images/' + ${recipe.id} + .jpg}" style="width:250px;height:250px;">

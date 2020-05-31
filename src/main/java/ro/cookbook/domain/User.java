@@ -26,6 +26,9 @@ public class User extends BaseEntity<Long> {
     private Set<Authorities> authorities = new HashSet<>();
     @OneToMany
     private Set<Recipe> addedRecipes;
+    @OneToMany
+    private Set<Recipe> myFavourites;
+
 
     @Override
     public String toString() {

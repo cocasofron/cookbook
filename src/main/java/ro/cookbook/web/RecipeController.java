@@ -31,12 +31,29 @@ public class RecipeController {
     private RecipeService service;
 
     @GetMapping("/getRecipes")
-    String getRecipes(@AuthenticationPrincipal User user, Model model) {
+    public String getRecipes(@AuthenticationPrincipal User user, Model model) {
         List<Recipe> recipes = service.getRecipes();
         model.addAttribute("recipes", recipes);
         model.addAttribute("user", user);
         return "recipes/recipes";
     }
+
+    @GetMapping("recipes/myFavourites")
+    public String getMyFavourites(@AuthenticationPrincipal User user, Model model) {
+        List<Recipe> recipes = service.getMyFavourites(user);
+        model.addAttribute("recipes", recipes);
+        model.addAttribute("user", user);
+        return "recipes/recipes";
+    }
+
+    @PostMapping("/recipes/addToFavourites")
+    public String addToFavourites(@AuthenticationPrincipal User user, String recipeId, Model model) {
+        model.addAttribute("user", user);
+        model.addAttribute("recipeId", recipeId);
+        service.addToFavourites(recipeId, user);
+        return "success";
+    }
+
 
     @GetMapping("/recipes/new")
     public String displayForm(@AuthenticationPrincipal User user, Model model) {

@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import ro.cookbook.domain.Recipe;
+import ro.cookbook.domain.User;
 import ro.cookbook.repositories.RecipeRepository;
 
 import java.nio.file.Files;
@@ -13,6 +14,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import static ro.cookbook.Utils.containsIgnoreCase;
@@ -25,6 +27,20 @@ public class RecipeService {
 
     public List<Recipe> getRecipes() {
         return repository.findAll();
+    }
+
+    public List<Recipe> getMyFavourites(User user){
+        return repository.findAll().stream()
+                .filter(r->r.getLikedBy().equals(user))
+                .collect(Collectors.toList());
+    }
+
+    public void addToFavourites(String recipeId, User user){
+        Recipe recipe = repository.getOne(Long.valueOf(recipeId));
+        Set<User> users=recipe.getLikedBy();
+        users.add(user);
+        recipe.setLikedBy(users);
+        repository.save(recipe);
     }
 
     public List<Recipe> filterByName(String name) {
