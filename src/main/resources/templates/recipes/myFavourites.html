@@ -31,13 +31,6 @@
         </ul>
         <div sec:authorize="isAuthenticated()">
             <ul class="nav navbar-nav navbar-right">
-                <li>
-                    <form action="/recipes/myFavourites">
-                        <button type="submit" class="glyphicon glyphicon-heart" style="margin-top:13px;">
-
-                        </button>
-                    </form>
-                </li>
                 <li><a><span th:text="|Hello, ${user.firstName}!|"></span></a></li>
                 <li>
                     <form method="post" action="/logout">
@@ -83,15 +76,6 @@
                 </div>
                 <div class="panel-body">
                     <div class="col-sm-10 glyphicon glyphicon-user" th:text="' '+${recipe.addedBy}"></div>
-                </div>
-                <div sec:authorize="isAuthenticated()">
-                    <form method="post" action="/recipes/addToFavourites">
-                        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
-                        <input type="hidden" id="recipeId" name="recipeId" th:value="${recipe.id}"/>
-                        <button type="submit" style="margin-bottom:10px; float: right;">
-                            <span class="glyphicon glyphicon-heart"></span> Add to favourites
-                        </button>
-                    </form>
                 </div>
             </div>
             <div class="panel panel-default col-sm-3">

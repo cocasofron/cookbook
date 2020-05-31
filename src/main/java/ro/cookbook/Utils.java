@@ -1,5 +1,9 @@
 package ro.cookbook;
 
+import ro.cookbook.domain.User;
+
+import java.util.Set;
+
 public class Utils {
 
     public static boolean containsIgnoreCase(String str, String searchStr)     {
@@ -12,6 +16,15 @@ public class Utils {
         for (int i = str.length() - length; i >= 0; i--) {
             if (str.regionMatches(true, i, searchStr, 0, length))
                 return true;
+        }
+        return false;
+    }
+
+    public static boolean contains(Set<User> users, User user) {
+        for (User u : users) {
+            if (u.getId().equals(user.getId())) {
+                return true;
+            }
         }
         return false;
     }

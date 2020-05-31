@@ -43,7 +43,7 @@ public class RecipeController {
         List<Recipe> recipes = service.getMyFavourites(user);
         model.addAttribute("recipes", recipes);
         model.addAttribute("user", user);
-        return "recipes/recipes";
+        return "recipes/myFavourites";
     }
 
     @PostMapping("/recipes/addToFavourites")

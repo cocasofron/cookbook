@@ -17,6 +17,7 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import static ro.cookbook.Utils.contains;
 import static ro.cookbook.Utils.containsIgnoreCase;
 
 @Service
@@ -29,15 +30,15 @@ public class RecipeService {
         return repository.findAll();
     }
 
-    public List<Recipe> getMyFavourites(User user){
+    public List<Recipe> getMyFavourites(User user) {
         return repository.findAll().stream()
-                .filter(r->r.getLikedBy().equals(user))
+                .filter(recipe -> contains(recipe.getLikedBy(), user))
                 .collect(Collectors.toList());
     }
 
-    public void addToFavourites(String recipeId, User user){
+    public void addToFavourites(String recipeId, User user) {
         Recipe recipe = repository.getOne(Long.valueOf(recipeId));
-        Set<User> users=recipe.getLikedBy();
+        Set<User> users = recipe.getLikedBy();
         users.add(user);
         recipe.setLikedBy(users);
         repository.save(recipe);
