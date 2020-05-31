@@ -1,6 +1,9 @@
 package ro.cookbook.domain;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.Entity;
@@ -16,4 +19,9 @@ public class Authorities extends BaseEntity<Long> implements GrantedAuthority {
     private String authority;
     @ManyToOne
     private User user;
+
+    @Override
+    public String toString() {
+        return authority;
+    }
 }

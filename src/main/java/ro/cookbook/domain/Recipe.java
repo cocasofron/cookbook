@@ -22,7 +22,7 @@ public class Recipe extends BaseEntity<Long> {
     private String tags;
     @ManyToOne
     private User addedBy;
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     private Set<User> likedBy;
 
     @Override

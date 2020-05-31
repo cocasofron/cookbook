@@ -4,6 +4,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import ro.cookbook.security.CustomSecurityUser;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -26,9 +27,9 @@ public class User extends BaseEntity<Long> {
     private String password;
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "user")
     private Set<Authorities> authorities = new HashSet<>();
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     private Set<Recipe> addedRecipes;
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     private Set<Recipe> myFavourites;
 
 

@@ -13,6 +13,7 @@ import ro.cookbook.security.CustomSecurityUser;
 
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
 
 
 @Service
@@ -37,9 +38,26 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         return new CustomSecurityUser(user);
     }
 
+    public User findByUsername(String username) {
+        return userRepo.findByUsername(username);
+    }
+
     public User registrer(User user) {
         user.setAuthorities(new HashSet<>(Collections.singletonList(new Authorities(DEFAULT_USER_ROLE, user))));
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         return userRepo.save(user);
+    }
+
+    public User changeRole(User user, String role) {
+        user.setAuthorities(new HashSet<>(Collections.singletonList(new Authorities(role, user))));
+        return userRepo.save(user);
+    }
+
+    public List<User> getAllUsers() {
+        return userRepo.findAll();
+    }
+
+    public void deleteUser(User user) {
+        userRepo.delete(user);
     }
 }
