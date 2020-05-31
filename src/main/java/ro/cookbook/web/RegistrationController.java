@@ -18,7 +18,7 @@ public class RegistrationController {
     public String displayRegistrationForm(Model model) {
         User user = new User();
         model.addAttribute("user", user);
-        return "registration";
+        return "topbar/registration";
     }
 
     @PostMapping("/createUser")

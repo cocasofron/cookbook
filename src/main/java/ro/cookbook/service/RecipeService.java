@@ -15,6 +15,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import static ro.cookbook.Utils.containsIgnoreCase;
+
 @Service
 public class RecipeService {
 
@@ -28,7 +30,7 @@ public class RecipeService {
     public List<Recipe> filterByName(String name) {
 
         return repository.findAll().stream()
-                .filter(r -> r.getRecipeName().equalsIgnoreCase(name) || r.getRecipeName().contains(name))
+                .filter(r -> containsIgnoreCase(r.getRecipeName(), (name)))
                 .collect(Collectors.toList());
     }
 

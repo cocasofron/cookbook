@@ -35,7 +35,7 @@ public class RecipeController {
         List<Recipe> recipes = service.getRecipes();
         model.addAttribute("recipes", recipes);
         model.addAttribute("user", user);
-        return "recipes";
+        return "recipes/recipes";
     }
 
     @GetMapping("/recipes/new")
@@ -43,7 +43,7 @@ public class RecipeController {
         Recipe aRecipe = new Recipe();
         model.addAttribute("recipe", aRecipe);
         model.addAttribute("user", user);
-        return "addRecipe";
+        return "recipes/addRecipe";
     }
 
     @PostMapping("/recipes/addRecipe")
@@ -67,7 +67,7 @@ public class RecipeController {
     public String searchEverything(@AuthenticationPrincipal User user, Model model, String search) {
         model.addAttribute("search", search);
         Set<Recipe> recipes = new HashSet<>();
-        service.filterByName(search);
+        recipes.addAll(service.filterByName(search));
         List<String> keywordsList = Arrays.asList(search.split(" "));
         recipes.addAll(service.filterByIngredients(keywordsList));
         recipes.addAll(service.filterByCategory(keywordsList));
@@ -81,7 +81,7 @@ public class RecipeController {
         Recipe recipe = service.getById(recipeId);
         model.addAttribute("recipe", recipe);
         model.addAttribute("user", user);
-        return "recipe";
+        return "recipes/recipe";
     }
 
     @Secured({"ROLE_ADMIN"})

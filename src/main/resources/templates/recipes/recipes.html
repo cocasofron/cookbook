@@ -23,7 +23,8 @@
                 <form action="/searchRecipes" th:object="${search}" method="POST">
                     <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
                     <div style="margin-top:9px;">
-                        <input class="form-control" type="text" name="search" placeholder="Search anything" aria-label="Search">
+                        <input class="form-control" type="text" name="search" placeholder="Search anything"
+                               aria-label="Search">
                     </div>
                 </form>
             </li>
@@ -58,23 +59,25 @@
 <br>
 <div class="container">
     <div th:each="recipe : ${recipes}">
-        <h3 th:text="${recipe.recipeName}"></h3>
-        <div class="panel panel-default col-sm-8">
-            <div class="panel-body">
-                <label class="control-label col-sm-2">Ingredients:</label>
-                <div class="col-sm-10" th:text="${recipe.ingredients}"></div>
+        <div class="container col-sm-12">
+            <div class="panel panel-default col-sm-9">
+                <h3 th:text="${recipe.recipeName}"></h3>
+                <div class="panel-body">
+                    <label class="control-label col-sm-2">Ingredients:</label>
+                    <div class="col-sm-10" th:text="${recipe.ingredients}"></div>
+                </div>
+                <div class="panel-body">
+                    <label class="control-label col-sm-2">How to do it:</label>
+                    <div class="col-sm-10" th:text="${recipe.cookingMethod}"></div>
+                </div>
+                <div class="panel-body">
+                    <label class="control-label col-sm-2">Categories:</label>
+                    <div class="col-sm-10" th:text="${recipe.tags}"></div>
+                </div>
             </div>
-            <div class="panel-body">
-                <label class="control-label col-sm-2">How to do it:</label>
-                <div class="col-sm-10" th:text="${recipe.cookingMethod}"></div>
+            <div class="panel panel-default col-sm-3">
+                <img th:src="@{'images/' + ${recipe.id} + .jpg}" style="width:250px;height:250px;">
             </div>
-            <div class="panel-body">
-                <label class="control-label col-sm-2">Categories:</label>
-                <div class="col-sm-10" th:text="${recipe.tags}"></div>
-            </div>
-        </div>
-        <div class="panel panel-default col-sm-4">
-            <img th:src="@{'images/' + ${recipe.id} + .jpg}" style="width: 100%">
         </div>
     </div>
 </div>
