@@ -36,6 +36,12 @@ public class RecipeService {
                 .collect(Collectors.toList());
     }
 
+    public List<Recipe> getMyRecipes(User user) {
+        return repository.findAll().stream()
+                .filter(recipe -> recipe.getAddedBy().getId().equals(user.getId()))
+                .collect(Collectors.toList());
+    }
+
     public void addToFavourites(String recipeId, User user) {
         Recipe recipe = repository.getOne(Long.valueOf(recipeId));
         Set<User> users = recipe.getLikedBy();

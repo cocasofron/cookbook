@@ -4,7 +4,6 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import ro.cookbook.security.CustomSecurityUser;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;

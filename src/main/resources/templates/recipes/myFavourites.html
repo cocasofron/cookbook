@@ -17,6 +17,7 @@
         <ul class="nav navbar-nav">
             <li class="active"><a href="/">Home</a></li>
             <li class="active"><a href="/getRecipes">Recipes</a></li>
+            <li sec:authorize="isAuthenticated()" class="active"><a href="/recipes/myRecipes">My recipes</a></li>
         </ul>
         <ul class="nav navbar-nav">
             <li>

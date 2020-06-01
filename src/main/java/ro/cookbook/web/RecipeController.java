@@ -54,6 +54,14 @@ public class RecipeController {
         return "success";
     }
 
+    @GetMapping("recipes/myRecipes")
+    public String getMyRecipes(@AuthenticationPrincipal User user, Model model) {
+        List<Recipe> recipes = service.getMyRecipes(user);
+        model.addAttribute("recipes", recipes);
+        model.addAttribute("user", user);
+        return "recipes/myRecipes";
+    }
+
 
     @GetMapping("/recipes/new")
     public String displayForm(@AuthenticationPrincipal User user, Model model) {
