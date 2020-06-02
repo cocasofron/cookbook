@@ -80,6 +80,7 @@ public class RecipeController {
                 .map(ingredient -> new Ingredient(ingredient.getIngredient(), ingredient.getQuantity(), recipe))
                 .collect(Collectors.toList());
         recipe.setIngredients(ingredients);
+        recipe.setAddedBy(user);
         try {
             service.add(recipe, file);
         } catch (Exception e) {

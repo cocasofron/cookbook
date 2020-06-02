@@ -26,9 +26,9 @@ public class User extends BaseEntity<Long> {
     private String password;
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "user")
     private Set<Authorities> authorities = new HashSet<>();
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany
     private Set<Recipe> addedRecipes;
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany
     private Set<Recipe> myFavourites;
 
 

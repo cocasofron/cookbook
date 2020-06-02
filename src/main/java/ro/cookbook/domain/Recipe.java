@@ -20,9 +20,9 @@ public class Recipe extends BaseEntity<Long> {
     private List<Ingredient> ingredients;
     private String cookingMethod;
     private String tags;
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     private User addedBy;
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany
     private Set<User> likedBy;
 
     @Override

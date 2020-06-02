@@ -12,7 +12,7 @@
 <nav class="navbar navbar-inverse">
     <div class="container-fluid">
         <div class="navbar-header">
-            <a class="navbar-brand" href="#">cookbook.ro</a>
+            <img th:src="@{../images/logo.jpg}" alt="logo" style="width: 200px; height: 45px;">
         </div>
         <ul class="nav navbar-nav">
             <li class="active"><a href="/">Home</a></li>
@@ -69,25 +69,16 @@
         <div class="form-group">
             <label class="control-label col-sm-2" for="tags">Ingredients</label>
             <div class="col-sm-10">
-                <div>
-                    <input type="text" id="ingredient" placeholder="ingredient"
-                           th:field="${recipe.ingredients[0].ingredient}"/>
-                    <input type="text" id="quantity" placeholder="quantity"
-                           th:field="${recipe.ingredients[0].quantity}"/>
+                <div id="ingredientList">
+                    <div th:each="ingredientItem, status : ${recipe.ingredients}">
+                        <input placeholder="Ingredient" th:field="*{ingredients[__${status.index}__].ingredient}"
+                               type="text">
+                        <input placeholder="Quantity" th:field="*{ingredients[__${status.index}__].quantity}"
+                               type="text">
+                    </div>
                 </div>
-                <br>
-                <div>
-                    <input type="text" id="ingredient" placeholder="ingredient"
-                           th:field="${recipe.ingredients[1].ingredient}"/>
-                    <input type="text" id="quantity" placeholder="quantity"
-                           th:field="${recipe.ingredients[1].quantity}"/>
-                </div>
-                <br>
-                <div>
-                    <input type="text" id="ingredient" placeholder="ingredient"
-                           th:field="${recipe.ingredients[2].ingredient}"/>
-                    <input type="text" id="quantity" placeholder="quantity"
-                           th:field="${recipe.ingredients[2].quantity}"/>
+                <div class="col-sm-2">
+                    <button type="button" class="btn btn-secondary" onclick="addRow()">Add row</button>
                 </div>
             </div>
         </div>
@@ -116,5 +107,25 @@
         </div>
     </form>
 </div>
+<script>
+    let addRow = function () {
+        let listName = 'ingredients';
+        let fieldsNames = ['ingredient', 'quantity'];
+        let rowIndex = document.querySelectorAll('.item').length;
+        let row = document.createElement('div');
+        row.classList.add('row', 'item');
+        fieldsNames.forEach((fieldName) => {
+            let input = document.createElement('input');
+            input.type = 'text';
+            input.id = listName + rowIndex + '.' + fieldName;
+            input.setAttribute('name', listName + '[' + rowIndex + '].' + fieldName);
+            input.placeholder = fieldName;
+            row.appendChild(input);
+        });
+        let br = document.createElement('br');
+        row.appendChild(br);
+        document.getElementById('ingredientList').appendChild(row);
+    };
+</script>
 </body>
 </html>
