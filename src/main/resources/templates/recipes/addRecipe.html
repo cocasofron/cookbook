@@ -113,6 +113,7 @@
         let fieldsNames = ['ingredient', 'quantity'];
         let rowIndex = document.querySelectorAll('.item').length;
         let row = document.createElement('div');
+        row.classList.add('item');
         fieldsNames.forEach((fieldName) => {
             let input = document.createElement('input');
             input.type = 'text';
