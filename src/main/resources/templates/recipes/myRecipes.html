@@ -8,7 +8,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 </head>
-<body>
+<body style="background-color: mintcream">
 <nav class="navbar navbar-inverse">
     <div class="container-fluid">
         <div class="navbar-header">
@@ -62,7 +62,7 @@
     <h2>My recipes</h2>
     <div th:each="recipe : ${recipes}">
         <div class="container col-sm-12">
-            <div class="panel panel-default col-sm-9">
+            <div class="panel panel-default col-sm-9" style="background-color: mintcream">
                 <h3 th:text="${recipe.recipeName}"></h3>
                 <div class="panel-body">
                     <label class="control-label col-sm-2">Ingredients:</label>
@@ -79,9 +79,16 @@
                 <div class="panel-body">
                     <div class="col-sm-10 glyphicon glyphicon-user" th:text="' '+${recipe.addedBy}"></div>
                 </div>
+                <div style="margin-bottom:10px; float: right">
+                    <form method="post" action="/exportToPdf">
+                        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                        <input type="hidden" id="recipeId_" name="recipeId" th:value="${recipe.id}"/>
+                        <button type="submit" class="btn btn-info btn-sm">Export to PDF</button>
+                    </form>
+                </div>
             </div>
-            <div class="panel panel-default col-sm-3">
-                <img th:src="@{'../'+'images/' + ${recipe.id} + .jpg}" style="width:250px;height:250px;">
+            <div class="col-sm-3">
+                <img th:src="@{'../'+'images/' + ${recipe.id} + .jpg}" style="width:300px;height:400px;">
             </div>
         </div>
     </div>

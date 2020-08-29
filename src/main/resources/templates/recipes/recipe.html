@@ -74,9 +74,25 @@
                 <div class="panel-body">
                     <div class="col-sm-10 glyphicon glyphicon-user" th:text="' '+${recipe.addedBy}"></div>
                 </div>
+                <div style="margin-bottom:10px; float: right">
+                    <form method="post" action="/exportToPdf">
+                        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                        <input type="hidden" id="recipeId_" name="recipeId" th:value="${recipe.id}"/>
+                        <button type="submit" class="btn btn-info btn-sm">Export to PDF</button>
+                    </form>
+                </div>
+                <div sec:authorize="isAuthenticated()">
+                    <form method="post" action="/recipes/addToFavourites">
+                        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                        <input type="hidden" id="recipeId" name="recipeId" th:value="${recipe.id}"/>
+                        <button type="submit" class="btn btn-info btn-sm" style="margin-bottom:10px; margin-right: 20px; float: right;">
+                            <span class="glyphicon glyphicon-thumbs-up"></span> Like
+                        </button>
+                    </form>
+                </div>
             </div>
-            <div class="panel panel-default col-sm-3">
-                <img th:src="@{'images/' + ${recipe.id} + .jpg}" style="width:250px;height:250px;">
+            <div class="col-sm-3">
+                <img th:src="@{'images/' + ${recipe.id} + .jpg}" style="width:300px;height:400px;">
             </div>
         </div>
     </div>
