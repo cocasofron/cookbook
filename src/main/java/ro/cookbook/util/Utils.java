@@ -1,4 +1,4 @@
-package ro.cookbook;
+package ro.cookbook.util;
 
 import ro.cookbook.domain.User;
 

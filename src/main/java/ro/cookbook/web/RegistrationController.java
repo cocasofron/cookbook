@@ -6,13 +6,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import ro.cookbook.domain.User;
-import ro.cookbook.service.UserDetailsServiceImpl;
+import ro.cookbook.service.RegistrationService;
 
 @Controller
 public class RegistrationController {
 
     @Autowired
-    private UserDetailsServiceImpl userDetailsServiceImpl;
+    private RegistrationService registrationService;
 
     @GetMapping("/register")
     public String displayRegistrationForm(Model model) {
@@ -23,7 +23,7 @@ public class RegistrationController {
 
     @PostMapping("/createUser")
     public String register(User user, Model model) {
-        userDetailsServiceImpl.registrer(user);
+        registrationService.registrer(user);
         return "success";
     }
 }

@@ -7,6 +7,7 @@ import org.springframework.web.multipart.MultipartFile;
 import ro.cookbook.domain.Recipe;
 import ro.cookbook.domain.User;
 import ro.cookbook.repositories.RecipeRepository;
+import ro.cookbook.util.PdfExportHelper;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -17,14 +18,16 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import static ro.cookbook.Utils.contains;
-import static ro.cookbook.Utils.containsIgnoreCase;
+import static ro.cookbook.util.Utils.contains;
+import static ro.cookbook.util.Utils.containsIgnoreCase;
 
 @Service
 public class RecipeService {
 
     @Autowired
     private RecipeRepository repository;
+    @Autowired
+    private PdfExportHelper pdfExportHelper;
 
     public List<Recipe> getRecipes() {
         return repository.findAll();
@@ -48,6 +51,11 @@ public class RecipeService {
         users.add(user);
         recipe.setLikedBy(users);
         repository.save(recipe);
+    }
+
+    public void exportToPdf(String recipeId, User user) {
+        Recipe recipe = repository.getOne(Long.valueOf(recipeId));
+        pdfExportHelper.createPdf(recipe, user);
     }
 
     public List<Recipe> filterByName(String name) {

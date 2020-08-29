@@ -54,6 +54,14 @@ public class RecipeController {
         return "success";
     }
 
+    @PostMapping("/exportToPdf")
+    public String exportToPdf(@AuthenticationPrincipal User user, String recipeId, Model model) {
+        model.addAttribute("user", user);
+        model.addAttribute("recipeId", recipeId);
+        service.exportToPdf(recipeId, user);
+        return "success";
+    }
+
     @GetMapping("recipes/myRecipes")
     public String getMyRecipes(@AuthenticationPrincipal User user, Model model) {
         List<Recipe> recipes = service.getMyRecipes(user);
