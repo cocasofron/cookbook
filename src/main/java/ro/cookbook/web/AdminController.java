@@ -16,9 +16,6 @@ import java.util.List;
 public class AdminController {
 
     @Autowired
-    private UserDetailsServiceImpl userDetailsServiceImpl;
-
-    @Autowired
     private AdminService adminService;
 
     @GetMapping("/admin")
