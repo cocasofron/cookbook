@@ -3,7 +3,10 @@ package ro.cookbook.web;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -16,6 +19,7 @@ import ro.cookbook.domain.Recipe;
 import ro.cookbook.domain.User;
 import ro.cookbook.service.RecipeService;
 
+import java.io.ByteArrayInputStream;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
@@ -54,12 +58,22 @@ public class RecipeController {
         return "success";
     }
 
-    @PostMapping("/exportToPdf")
-    public String exportToPdf(@AuthenticationPrincipal User user, String recipeId, Model model) {
+    @PostMapping(value = "/exportToPdf", produces = MediaType.APPLICATION_PDF_VALUE)
+    public ResponseEntity<InputStreamResource> exportToPdf(@AuthenticationPrincipal User user, String recipeId, Model model) {
         model.addAttribute("user", user);
         model.addAttribute("recipeId", recipeId);
-        service.exportToPdf(recipeId, user);
-        return "success";
+
+        ByteArrayInputStream bis = service.exportToPdf(recipeId, user);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Disposition", "inline; filename=recipe.pdf");
+
+        return ResponseEntity
+                .ok()
+                .headers(headers)
+                .contentType(MediaType.APPLICATION_PDF)
+                .body(new InputStreamResource(bis));
+
     }
 
     @GetMapping("recipes/myRecipes")

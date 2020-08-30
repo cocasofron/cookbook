@@ -9,6 +9,7 @@ import ro.cookbook.domain.User;
 import ro.cookbook.repositories.RecipeRepository;
 import ro.cookbook.util.PdfExportHelper;
 
+import java.io.ByteArrayInputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -53,9 +54,9 @@ public class RecipeService {
         repository.save(recipe);
     }
 
-    public void exportToPdf(String recipeId, User user) {
+    public ByteArrayInputStream exportToPdf(String recipeId, User user) {
         Recipe recipe = repository.getOne(Long.valueOf(recipeId));
-        pdfExportHelper.createPdf(recipe, user);
+        return pdfExportHelper.createPdf(recipe, user);
     }
 
     public List<Recipe> filterByName(String name) {
