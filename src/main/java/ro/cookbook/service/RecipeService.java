@@ -19,6 +19,7 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import static ro.cookbook.util.Utils.IMAGES_ROOT_PATH;
 import static ro.cookbook.util.Utils.contains;
 import static ro.cookbook.util.Utils.containsIgnoreCase;
 
@@ -91,7 +92,7 @@ public class RecipeService {
     public Recipe add(Recipe recipe, MultipartFile file) throws Exception {
         recipe.setTags(recipe.getTags().toLowerCase());
         repository.save(recipe);
-        Path path = Paths.get("src/main/resources/static/images/" + recipe.getId() + ".jpg");
+        Path path = Paths.get(IMAGES_ROOT_PATH + recipe.getId() + ".jpg");
         Files.write(path, file.getBytes());
         return recipe;
     }

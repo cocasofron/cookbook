@@ -6,8 +6,10 @@ import java.util.Set;
 
 public class Utils {
 
-    public static boolean containsIgnoreCase(String str, String searchStr)     {
-        if(str == null || searchStr == null) return false;
+    public static final String IMAGES_ROOT_PATH = "src/main/resources/static/images/";
+
+    public static boolean containsIgnoreCase(String str, String searchStr) {
+        if (str == null || searchStr == null) return false;
 
         final int length = searchStr.length();
         if (length == 0)
