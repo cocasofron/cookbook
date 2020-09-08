@@ -8,7 +8,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 </head>
-<body>
+<body style="background-color: mintcream">
 <nav class="navbar navbar-inverse">
     <div class="container-fluid">
         <div class="navbar-header">
@@ -57,11 +57,14 @@
 <div class="container">
     <div th:each="recipe : ${recipe}">
         <div class="container col-sm-12">
-            <div class="panel panel-default col-sm-9">
+            <div class="panel panel-default col-sm-9" style="background-color: mintcream">
                 <h3 th:text="${recipe.recipeName}"></h3>
                 <div class="panel-body">
                     <label class="control-label col-sm-2">Ingredients:</label>
-                    <div class="col-sm-10" th:text="${recipe.ingredients}"></div>
+                    <div th:each="ingredient : ${recipe.ingredients}">
+                        <div class="col-sm-2"></div>
+                        <div class="col-sm-10" th:text="${ingredient.ingredient} +': '+ ${ingredient.quantity}"></div>
+                    </div>
                 </div>
                 <div class="panel-body">
                     <label class="control-label col-sm-2">How to do it:</label>
@@ -85,14 +88,15 @@
                     <form method="post" action="/recipes/addToFavourites">
                         <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
                         <input type="hidden" id="recipeId" name="recipeId" th:value="${recipe.id}"/>
-                        <button type="submit" class="btn btn-info btn-sm" style="margin-bottom:10px; margin-right: 20px; float: right;">
+                        <button type="submit" class="btn btn-info btn-sm"
+                                style="margin-bottom:10px; margin-right: 20px; float: right;">
                             <span class="glyphicon glyphicon-thumbs-up"></span> Like
                         </button>
                     </form>
                 </div>
             </div>
             <div class="col-sm-3">
-                <img th:src="@{'images/' + ${recipe.id} + .jpg}" style="width:300px;height:400px;">
+                <img th:src="@{'../images/' + ${recipe.id} + .jpg}" style="width:300px;height:400px;">
             </div>
         </div>
     </div>

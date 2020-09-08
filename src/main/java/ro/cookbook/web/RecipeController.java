@@ -132,6 +132,13 @@ public class RecipeController {
         return "recipes/recipe";
     }
 
+    @GetMapping("/deleteRecipe/{recipeId}")
+    String deleteById(@AuthenticationPrincipal User user, Model model, @PathVariable Long recipeId) {
+        model.addAttribute("user", user);
+        service.deleteById(recipeId);
+        return "success";
+    }
+
     @Secured({"ROLE_ADMIN"})
     @RequestMapping(value = "/recipes/deleteAll", method = RequestMethod.GET)
     ResponseEntity<?> deleteAll() {
